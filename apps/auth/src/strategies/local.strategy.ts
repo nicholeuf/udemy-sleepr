@@ -11,6 +11,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  // Passport automatically creates a user object, based on the value
+  // we return from the validate() method, and assigns it to the Request object as req.user.
   async validate(email: string, password: string) {
     try {
       return this.usersService.verifyUser(email, password);
