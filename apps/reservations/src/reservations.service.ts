@@ -4,6 +4,8 @@ import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { ReservationsRepository } from './reservations.repository';
 import { PAYMENTS_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { map } from 'rxjs';
+import Stripe from 'stripe';
 
 @Injectable()
 export class ReservationsService {
@@ -13,16 +15,20 @@ export class ReservationsService {
   ) {}
 
   async create(createReservationDto: CreateReservationDto, userId: string) {
-    this.paymentsService
-      .send('create_charge', createReservationDto.charge)
-      .subscribe(async (response) => {
-        console.log('response', response);
-        return await this.reservationsRepository.create({
-          ...createReservationDto,
-          timestamp: new Date(),
-          userId,
-        });
-      });
+    return this.paymentsService
+      .send<
+        Stripe.Response<Stripe.PaymentIntent>
+      >('create_charge', createReservationDto.charge)
+      .pipe(
+        map(async (res) => {
+          return this.reservationsRepository.create({
+            ...createReservationDto,
+            timestamp: new Date(),
+            userId,
+            invoiceId: res.id,
+          });
+        }),
+      );
   }
 
   async findAll() {
