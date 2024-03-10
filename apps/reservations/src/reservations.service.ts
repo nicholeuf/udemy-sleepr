@@ -16,7 +16,7 @@ export class ReservationsService {
     this.paymentsService
       .send('create_charge', createReservationDto.charge)
       .subscribe(async (response) => {
-        console.log(response);
+        console.log('response', response);
         return await this.reservationsRepository.create({
           ...createReservationDto,
           timestamp: new Date(),

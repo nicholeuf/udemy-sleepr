@@ -14,18 +14,23 @@ export class PaymentsService {
 
   constructor(private readonly configService: ConfigService) {}
 
-  async createCharge({ card, amount }: CreateChargeDto) {
-    const paymentMethod = await this.stripe.paymentMethods.create({
-      type: 'card',
-      card,
-    });
+  async createCharge({ amount, payment_method, currency }: CreateChargeDto) {
+    // https://docs.stripe.com/api/payment_intents/create
+    // https://docs.stripe.com/testing?testing-method=payment-methods#test-code
 
     const paymentIntent = await this.stripe.paymentIntents.create({
-      payment_method: paymentMethod.id,
+      payment_method,
+      // Amount intended to be collected by this PaymentIntent.
+      // A positive integer representing how much to charge in the smallest
+      // currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100,
+      // a zero-decimal currency).
       amount: amount * 100,
       confirm: true,
-      payment_method_types: ['card'],
-      currency: 'usd',
+      currency,
+      automatic_payment_methods: {
+        enabled: true,
+        allow_redirects: 'never',
+      },
     });
 
     return paymentIntent;

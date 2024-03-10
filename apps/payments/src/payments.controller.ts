@@ -9,6 +9,6 @@ export class PaymentsController {
 
   @MessagePattern('create_charge')
   async createCharge(@Payload() data: CreateChargeDto) {
-    this.paymentsService.createCharge(data);
+    return this.paymentsService.createCharge(data);
   }
 }
