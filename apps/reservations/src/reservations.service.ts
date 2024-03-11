@@ -5,7 +5,6 @@ import { ReservationsRepository } from './reservations.repository';
 import { PAYMENTS_SERVICE, UserDto } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { map } from 'rxjs';
-import Stripe from 'stripe';
 
 @Injectable()
 export class ReservationsService {
@@ -19,11 +18,11 @@ export class ReservationsService {
     { _id: userId, email }: UserDto,
   ) {
     return this.paymentsService
-      .send<
-        Stripe.Response<Stripe.PaymentIntent>
-      >('create_charge', { ...createReservationDto.charge, email })
+      .send<any>('create_charge', { ...createReservationDto.charge, email })
       .pipe(
         map(async (res) => {
+          // res is of type Stripe.Response<Stripe.PaymentIntent>
+          // stripe dependency is no longer available to reservations service
           return this.reservationsRepository.create({
             ...createReservationDto,
             timestamp: new Date(),
