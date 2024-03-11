@@ -1,6 +1,7 @@
 steps:
   # reservations
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-reservations'
     args:
       [
         'build',
@@ -10,15 +11,20 @@ steps:
         'apps/reservations/Dockerfile',
         '.',
       ]
+    waitFor: ['-'] # The '-' indicates that this step begins immediately.
+
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-reservations'
     args:
       [
         'push',
         'us-east4-docker.pkg.dev/disco-skyline-416915/reservations/production',
       ]
+    waitFor: ['build-reservations']
 
   # auth
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-auth'
     args:
       [
         'build',
@@ -28,12 +34,17 @@ steps:
         'apps/auth/Dockerfile',
         '.',
       ]
+    waitFor: ['-'] # The '-' indicates that this step begins immediately.
+
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-auth'
     args:
       ['push', 'us-east4-docker.pkg.dev/disco-skyline-416915/auth/production']
+    waitFor: ['build-auth']
 
   # payments
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-payments'
     args:
       [
         'build',
@@ -43,15 +54,20 @@ steps:
         'apps/payments/Dockerfile',
         '.',
       ]
+    waitFor: ['-'] # The '-' indicates that this step begins immediately.
+
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-payments'
     args:
       [
         'push',
         'us-east4-docker.pkg.dev/disco-skyline-416915/payments/production',
       ]
+    waitFor: ['build-payments']
 
   # notifications
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-notifications'
     args:
       [
         'build',
@@ -61,9 +77,13 @@ steps:
         'apps/notifications/Dockerfile',
         '.',
       ]
+    waitFor: ['-'] # The '-' indicates that this step begins immediately.
+
   - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-notifications'
     args:
       [
         'push',
         'us-east4-docker.pkg.dev/disco-skyline-416915/notifications/production',
       ]
+    waitFor: ['build-notifications']
