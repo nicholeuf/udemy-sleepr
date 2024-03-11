@@ -5,10 +5,12 @@ WORKDIR /usr/src/app
 
 COPY package.json ./
 COPY pnpm-lock.yaml ./
+COPY tsconfig.json tsconfig.json
 
 RUN npm install -g pnpm
 RUN pnpm install
-COPY . .
+COPY apps/notifications apps/notifications
+COPY libs libs
 RUN pnpm run build
 
 # Production
