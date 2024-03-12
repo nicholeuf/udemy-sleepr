@@ -24,7 +24,7 @@ Before getting started, you should have the following installed
 ### Connect Atlas Mongodb
 
 1. [Get connection string from Atlas](https://www.mongodb.com/docs/guides/atlas/connection-string/)
-2. Add connection string as a kubernetes secret by typing `kubectl create secret generic mongodb --from-literal=<CONNECTION_STRING>`
+2. Add connection string as a kubernetes secret by typing `kubectl create secret generic mongodb --from-literal=connectionString='<CONNECTION_STRING>'`
 
 ### Add secrets to kubernetes cluster
 
@@ -32,6 +32,15 @@ Before getting started, you should have the following installed
 2. Add smtp email by typing `kubectl create secret generic smtp --from-literal=user=<SMTP_USER>`
 3. Add stripe api key by typing `kubectl create secret generic stripe --from-literal=apiKey=<STRIPE_API_KEY>`
 4. Add JWT secret by typing `kubectl create secret generic jwt --from-literal=jwtSecret=<JWT_SECRET>`
+
+### Editing secrets
+
+The following steps should be used for modifying the mongodb secret, from the [docs](/docs/tasks/configmap-secret/managing-secret-using-kubectl/#edit-secret):
+
+1. Type the following to base64 encode the connection string `echo -n CONNECTION_STRING' | base64`. Make note of the output for step 3 below.
+2. Type the following to edit the secret `kubectl edit secrets mongodb`. An editor will be displayed where the secret can be modified.
+3. Modify the connectionString value with single quotes around it, '<BASE64_CONNECTION_STRING>'
+4. Save the file.
 
 ### Using sleepr
 
