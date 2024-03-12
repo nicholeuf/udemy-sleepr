@@ -28,8 +28,9 @@ Before getting started, you should have the following installed
 
 ### Add secrets to kubernetes cluster
 
-1. Add google secrets as a kubernetes by typing `kubectl create secret generic google --from-literal=clientSecret=<CLIENT_SECRET> --from-literal=refreshToken=<REFRESH_TOKEN`
-2. Add smtp email as a kubernetes secret by typing `kubectl create secret generic smtp --from-literal=user=<SMTP_USER>`
+1. Add google secrets by typing `kubectl create secret generic google --from-literal=clientSecret=<CLIENT_SECRET> --from-literal=refreshToken=<REFRESH_TOKEN`
+2. Add smtp email by typing `kubectl create secret generic smtp --from-literal=user=<SMTP_USER>`
+3. Add stripe api key by typing `kubectl create secret generic stripe --from-literal=apiKey=<STRIPE_API_KEY>`
 
 ### Using sleepr
 
