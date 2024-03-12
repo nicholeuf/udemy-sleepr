@@ -6,7 +6,7 @@ metadata:
   name: payments
 spec:
   ports:
-    - name: '3001'
+    - name: 'tcp'
       port: 3001
       protocol: TCP
       targetPort: 3001

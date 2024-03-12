@@ -26,7 +26,7 @@ spec:
             - name: PORT
               value: '3004'
             - name: AUTH_HOST
-              value: auth
+              value: auth-tcp
             - name: AUTH_PORT
               value: '3002'
             - name: PAYMENTS_HOST
