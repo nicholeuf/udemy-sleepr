@@ -41,6 +41,7 @@ The following steps should be used for modifying the mongodb secret, from the [d
 2. Type the following to edit the secret `kubectl edit secrets mongodb`. An editor will be displayed where the secret can be modified.
 3. Modify the connectionString value with single quotes around it, '<BASE64_CONNECTION_STRING>'
 4. Save the file.
+5. Restart the effected apps by typing `kubectl rollout restart deployment reservations`
 
 ### Using sleepr
 
