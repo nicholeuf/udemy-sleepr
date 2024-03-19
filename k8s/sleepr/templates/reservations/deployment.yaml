@@ -15,7 +15,7 @@ spec:
         app: reservations
     spec:
       containers:
-        - image: us-east4-docker.pkg.dev/disco-skyline-416915/reservations/production
+        - image: 411695669162.dkr.ecr.us-east-1.amazonaws.com/reservations:latest
           name: reservations
           env:
             - name: MONGODB_URI
