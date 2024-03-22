@@ -27,5 +27,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 // HTTP requests contain the JWT in the cookies
 // Microservice requests contain the JWT in the request
 const cookieExtractor = (request: any) => {
-  return request?.cookies?.Authentication || request?.Authentication;
+  return (
+    request?.cookies?.Authentication ||
+    request?.Authentication ||
+    request?.headers?.Authentication
+  );
 };
