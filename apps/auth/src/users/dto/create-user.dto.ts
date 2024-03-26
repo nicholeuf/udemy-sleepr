@@ -15,5 +15,5 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsArray()
-  roles?: RoleDto[];
+  roles?: RoleDto[] = [];
 }
