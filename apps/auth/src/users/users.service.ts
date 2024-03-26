@@ -25,7 +25,11 @@ export class UsersService {
         let role: Role;
 
         if (!!roleDto.name) {
-          role = await this.roleRepository.findOne({ name: roleDto.name });
+          try {
+            role = await this.roleRepository.findOne({ name: roleDto.name });
+          } catch (err) {
+            // role not found
+          }
         }
 
         if (!role) {
